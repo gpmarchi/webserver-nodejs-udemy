@@ -5,16 +5,27 @@
     <meta charset="UTF-8" />
     <title>Weather</title>
     <link rel="icon" href="/img/weather.png">
-    <link rel="stylesheet" href="./css/styles.css" />
-    <script src="./js/client.js"></script>
+    <link rel="stylesheet" href="/css/styles.css" />
 </head>
 
 <body>
     <div class="main-content">
         {{>header}}
+
         <p>Use this site to get your weather!</p>
+        <form>
+            <input placeholder="Location" type="text">
+            <button>Search</button>
+        </form>
+
+        <p id="error-loc"></p>
+        <p id="forecast"></p>
+
     </div>
+
     {{>footer}}
+
+    <script src="/js/client.js"></script>
 </body>
 
 </html>
