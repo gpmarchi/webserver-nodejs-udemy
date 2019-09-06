@@ -1,6 +1,8 @@
 const path = require("path");
 const express = require("express");
 const hbs = require("hbs");
+const forecast = require("./utils/forecast");
+const geocode = require("./utils/geocode");
 
 const log = console.log;
 const app = express();
@@ -41,9 +43,33 @@ app.get("/help", (req, res) => {
 });
 
 app.get("/weather", (req, res) => {
-  res.send({
-    location: "São Paulo, Brazil",
-    forecast: "It's 14 degrees out."
+  const { address } = req.query;
+
+  if (!address) {
+    return res.send({
+      error:
+        "You must provide an address for the weather service to run a query."
+    });
+  }
+
+  // passing a default empty object to deconstruct for the case where an invalid
+  // query is sent to the api
+  geocode(address, (error, { longitude, latitude, location } = {}) => {
+    if (error) {
+      return res.send({ error });
+    }
+
+    forecast(latitude, longitude, (error, forecast) => {
+      if (error) {
+        return res.send({ error });
+      }
+
+      res.send({
+        forecast,
+        location,
+        address
+      });
+    });
   });
 });
 
