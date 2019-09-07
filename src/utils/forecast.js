@@ -21,11 +21,13 @@ const forecast = (latitude, longitude, callback) => {
         undefined,
         `${dailyWeatherData.data[0].summary} It is currently ${
           currentlyWeatherData.temperature
-        } degrees out. There is a ${Math.round(
-          currentlyWeatherData.precipProbability * 100
-        )}% chance of rain. Temperature high of ${
+        } degrees out. The high today is ${
           dailyWeatherData.data[0].temperatureHigh
-        } and low of ${dailyWeatherData.data[0].temperatureLow}`
+        } with a low of ${
+          dailyWeatherData.data[0].temperatureLow
+        } degrees. There is a ${Math.round(
+          currentlyWeatherData.precipProbability * 100
+        )}% chance of rain.`
       );
     }
   });
